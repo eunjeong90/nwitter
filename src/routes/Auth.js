@@ -2,20 +2,10 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Auth() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const onChange = (event) => {
-    const {
-      target: { name, value },
-    } = event;
-    if (name === "email") {
-      setEmail(value);
-    } else {
-      setPassword(value);
-    }
-  };
-  console.log(email);
-  console.log(password);
+  const [form, setForm] = useState({ email: "", password: "" });
+  const onChange = ({ target: { name, value } }) =>
+    setForm({ ...form, [name]: value });
+  console.log(form);
   const onSubmit = (event) => {
     event.preventDefault();
   };
@@ -32,7 +22,7 @@ function Auth() {
           type='text'
           placeholder='Email'
           required
-          value={email}
+          value={form.email}
           onChange={onChange}
         />
         <input
@@ -40,7 +30,7 @@ function Auth() {
           type='password'
           placeholder='Password'
           required
-          value={password}
+          value={form.password}
           onChange={onChange}
         />
         <input type='submit' value='로그인하기' />
