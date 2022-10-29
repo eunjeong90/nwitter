@@ -28,7 +28,10 @@ module.exports = {
   plugins: ["react", "prettier"],
   rules: {
     "react/jsx-filename-extension": ["warn", { extensions: [".js", ".jsx"] }],
-    "react/function-component-definition": [2, { namedcomponents: "arrow-function" }],
+    "react/function-component-definition": [
+      2,
+      { namedcomponents: "arrow-function" },
+    ],
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "import/no-unresolved": [2, { commonjs: true, amd: true }],
     "prettier/prettier": [
