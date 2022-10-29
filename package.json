@@ -46,6 +46,8 @@
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.31.10",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "styled-components": "^5.3.6",
+    "styled-reset": "^4.4.2"
   }
 }
