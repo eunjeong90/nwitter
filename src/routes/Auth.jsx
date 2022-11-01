@@ -40,31 +40,17 @@ function Auth() {
     }
   };
 
-  const onGoogleSubmit = () => {
-    let GoogleProviderData = new GoogleAuthProvider();
-    signInWithPopup(authService, GoogleProviderData)
-      .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-      })
-      .catch((error) => {
-        console.error(error);
+  const onSocialSubmitClick = ({ target: { name } }) => {
+    let providerData;
+    if (name === "google") {
+      providerData = new GoogleAuthProvider();
+    } else if (name === "facebook") {
+      providerData = new FacebookAuthProvider();
+      providerData.setCustomParameters({
+        display: "popup",
       });
-  };
-
-  // URL 에러 있음 추후에 수정
-  const onFacebookSubmit = () => {
-    let facebookProviderData = new FacebookAuthProvider();
-    signInWithPopup(authService, facebookProviderData)
-      .then((result) => {
-        const user = result.user;
-        const credential = FacebookAuthProvider.credentialFromResult(result);
-        const accessToken = credential.accessToken;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    }
+    signInWithPopup(authService, providerData);
   };
 
   const onCheckAccount = () => {
@@ -74,10 +60,10 @@ function Auth() {
     <div>
       <form onSubmit={onSubmit}>
         <div>
-          <button name='google' onClick={onGoogleSubmit}>
+          <button name='google' onClick={onSocialSubmitClick}>
             Google 계정으로 로그인하기
           </button>
-          <button name='fackbook' onClick={onFacebookSubmit}>
+          <button name='facebook' onClick={onSocialSubmitClick}>
             Facebook 계정으로 로그인하기
           </button>
           <span>또는</span>
