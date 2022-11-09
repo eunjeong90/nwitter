@@ -9,6 +9,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
+import Nweet from "components/Nweet";
 
 function Home({ useObj }) {
   const [nweet, setNweet] = useState("");
@@ -63,13 +64,7 @@ function Home({ useObj }) {
         <input type='submit' value='트윗하기' />
       </form>
       {nweetResult.map((post) => (
-        <>
-          <div key={post.id}>
-            <p>{post.text}</p>
-            <p>{post.userName}</p>
-            <p>{post.createdAt}</p>
-          </div>
-        </>
+        <Nweet key={post.id} nweetObj={post} />
       ))}
     </div>
   );
