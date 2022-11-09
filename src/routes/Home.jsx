@@ -1,24 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "libs/firebase";
-import { addDoc, getDocs, collection } from "firebase/firestore";
+import {
+  addDoc,
+  getDocs,
+  collection,
+  doc,
+  onSnapshot,
+  query,
+  orderBy,
+} from "firebase/firestore";
 
-function Home() {
+function Home({ useObj }) {
   const [nweet, setNweet] = useState("");
   const [nweetResult, setNweetResult] = useState([]);
+  const { displayName, uid } = useObj;
 
-  const handleGetNweetPost = async () => {
-    const getNweetPost = await getDocs(collection(dbService, "tweets"));
-    getNweetPost.forEach((post) => {
-      const nweetObject = {
-        ...post.data(),
-        id: post.id,
-      };
-      setNweetResult((prev) => [nweetObject, ...prev]);
-    });
-    console.log(nweetResult);
-  };
   useEffect(() => {
-    handleGetNweetPost();
+    const q = query(
+      collection(dbService, "tweets"),
+      orderBy("createdAt", "desc")
+    );
+    onSnapshot(q, (snapshot) => {
+      const nweetArr = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setNweetResult(nweetArr);
+    });
   }, []);
 
   const onSubmit = async (event) => {
@@ -26,7 +34,8 @@ function Home() {
     try {
       const nweetPost = await addDoc(collection(dbService, "tweets"), {
         text: nweet,
-        createdAt: Date.now(),
+        createdAt: new Date().toLocaleString(),
+        userName: uid,
       });
       setNweet("");
       console.log("Document written with ID: ", nweetPost.id);
@@ -57,7 +66,8 @@ function Home() {
         <>
           <div key={post.id}>
             <p>{post.text}</p>
-            {/* <p>{post.createdAt}</p> */}
+            <p>{post.userName}</p>
+            <p>{post.createdAt}</p>
           </div>
         </>
       ))}
