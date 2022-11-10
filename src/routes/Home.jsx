@@ -64,7 +64,11 @@ function Home({ useObj }) {
         <input type='submit' value='트윗하기' />
       </form>
       {nweetResult.map((post) => (
-        <Nweet key={post.id} nweetObj={post} />
+        <Nweet
+          key={post.id}
+          nweetObj={post}
+          isCurrentUser={post.userName === useObj.uid}
+        />
       ))}
     </div>
   );
