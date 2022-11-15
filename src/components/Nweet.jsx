@@ -36,6 +36,13 @@ function Nweet({ nweetObj, isCurrentUser }) {
         <p>{nweetObj.text}</p>
         <p>{nweetObj.userName}</p>
         <p>{nweetObj.createdAt}</p>
+        {nweetObj.imgFileURL && (
+          <img
+            src={nweetObj.imgFileURL}
+            style={{ width: "300px", height: "auto" }}
+            alt='사진'
+          />
+        )}
         {isCurrentUser && (
           <>
             <button onClick={handleRemoveNweet}>삭제하기</button>

@@ -9,7 +9,7 @@ import {
   query,
   orderBy,
 } from "firebase/firestore";
-import { ref, uploadString } from "firebase/storage";
+import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { v4 as uuidv4 } from "uuid";
 import Nweet from "components/Nweet";
 
@@ -35,21 +35,21 @@ function Home({ useObj }) {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    // try {
-    //   const nweetPost = await addDoc(collection(dbService, "tweets"), {
-    //     text: nweet,
-    //     createdAt: new Date().toLocaleString(),
-    //     userName: uid,
-    //   });
-    //   setNweet("");
-    //   console.log("Document written with ID: ", nweetPost.id);
-    //   console.log(`onsubmit ${nweet}`);π
-    // } catch (e) {
-    //   console.error("Error adding document: ", e);
-    // }
-    const fileRef = ref(storageService, `${uid}/${uuidv4()}`);
-    const res = await uploadString(fileRef, imgFile, "data_url");
-    console.log(res);
+    let imgFileURL = "";
+    if (imgFileURL != "") {
+      const imgFileRef = ref(storageService, `${uid}/${uuidv4()}`);
+      await uploadString(imgFileRef, imgFile, "data_url");
+      imgFileURL = await getDownloadURL(imgFileRef);
+    }
+    const nweetObj = {
+      text: nweet,
+      createdAt: new Date().toLocaleString(),
+      userName: uid,
+      imgFileURL,
+    };
+    await addDoc(collection(dbService, "tweets"), nweetObj);
+    setNweet("");
+    setImgFile("");
   };
   const onChange = ({ target: { value } }) => {
     setNweet(value);
@@ -60,7 +60,6 @@ function Home({ useObj }) {
     const file = files[0];
     const reader = new FileReader();
     reader.onloadend = ({ currentTarget: { result } }) => {
-      console.log(result);
       setImgFile(result);
     };
     reader.readAsDataURL(file);
