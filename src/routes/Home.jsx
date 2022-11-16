@@ -36,7 +36,7 @@ function Home({ useObj }) {
   const onSubmit = async (event) => {
     event.preventDefault();
     let imgFileURL = "";
-    if (imgFileURL != "") {
+    if (imgFile !== "") {
       const imgFileRef = ref(storageService, `${uid}/${uuidv4()}`);
       await uploadString(imgFileRef, imgFile, "data_url");
       imgFileURL = await getDownloadURL(imgFileRef);
@@ -93,7 +93,12 @@ function Home({ useObj }) {
             <button onClick={onClearFile}>초기화</button>
           </div>
         )}
-        <input type='file' accept='image/*' onChange={onFileChange} />
+        <input
+          ref={fileInput}
+          type='file'
+          accept='image/*'
+          onChange={onFileChange}
+        />
         <input type='submit' value='트윗하기' />
       </form>
       {nweetResult.map((post) => (

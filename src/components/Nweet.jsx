@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import { dbService } from "libs/firebase";
+import { dbService, storageService } from "libs/firebase";
+import { deleteObject, ref } from "firebase/storage";
 
 function Nweet({ nweetObj, isCurrentUser }) {
   const nweetRef = doc(dbService, "tweets", nweetObj.id);
   const [updateNweet, setUpdateNweet] = useState(nweetObj.text);
   const [updateEditor, setUpdateEditor] = useState(false);
-  const handleRemoveNweet = () => {
+
+  const handleRemoveNweet = async () => {
     const confirm = window.confirm("정말 이 nweet을 삭제하시겠어요?");
-    if (!confirm) {
-      return;
-    } else {
-      deleteDoc(nweetRef);
+    if (confirm) {
+      await deleteDoc(nweetRef);
+      const urlRef = ref(storageService, nweetObj.imgFileURL);
+      await deleteObject(urlRef);
     }
   };
   const toggleUpdateState = () => setUpdateEditor((prev) => !prev);
