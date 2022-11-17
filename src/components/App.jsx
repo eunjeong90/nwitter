@@ -12,6 +12,10 @@ function App() {
       if (user) {
         setIsLoggedIn(true);
         setUseObj(user);
+        if (user.displayName === null) {
+          const insertDefaultNickName = "Anonymous";
+          user.displayName = insertDefaultNickName;
+        }
       } else {
         setIsLoggedIn(false);
       }
