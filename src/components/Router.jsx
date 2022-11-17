@@ -8,7 +8,7 @@ import Profile from "routes/Profile";
 function AppRouter({ isLoggedIn, useObj }) {
   return (
     <BrowserRouter>
-      {isLoggedIn && <Navigation />}
+      {isLoggedIn && <Navigation useObj={useObj} />}
       <Routes>
         {isLoggedIn ? (
           <>
