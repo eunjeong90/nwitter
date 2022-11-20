@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import AppRouter from "./Router";
 import { authService } from "libs/firebase";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, updateCurrentUser } from "firebase/auth";
 
 function App() {
   const [firebaseInit, setFirebaseInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [useObj, setUseObj] = useState(null);
+
   useEffect(() => {
     onAuthStateChanged(authService, (user) => {
       if (user) {
@@ -18,15 +19,21 @@ function App() {
         }
       } else {
         setIsLoggedIn(false);
+        setUseObj(null);
       }
       setFirebaseInit(true);
     });
   }, []);
+  const refreshUser = async () => {
+    await updateCurrentUser(authService, authService.currentUser);
+    setUseObj(authService.currentUser);
+  };
   return (
     <AppRouter
       useObj={useObj}
       isLoggedIn={isLoggedIn}
       setIsLoggedIn={setIsLoggedIn}
+      refreshUser={refreshUser}
     />
   );
 }
