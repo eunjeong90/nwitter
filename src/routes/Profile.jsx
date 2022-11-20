@@ -4,9 +4,12 @@ import { authService, dbService } from "libs/firebase";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Profile({ useObj }) {
+function Profile({ useObj, refreshUser }) {
   const navigation = useNavigate();
   const [nickValue, setNickValue] = useState("");
+  const profileImgInput = useRef(null);
+  const [imgFile, setImgFile] = useState("");
+
   const onLogOut = () => {
     authService.signOut();
     navigation("/");
@@ -30,13 +33,24 @@ function Profile({ useObj }) {
   const nickValueOnChange = ({ target: { value } }) => {
     setNickValue(value);
   };
-  const updateProfileSubmit = (event) => {
+  const updateProfileSubmit = async (event) => {
     event.preventDefault();
     if (useObj.displayName !== nickValue) {
-      updateProfile(useObj, { displayName: nickValue });
+      await updateProfile(useObj, {
+        displayName: nickValue,
+      });
+      refreshUser();
     }
   };
 
+  const onFileChange = ({ target: { files } }) => {
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onloadend = ({ currentTarget: { result } }) => {
+      setImgFile(result);
+    };
+    reader.readAsDataURL(file);
+  };
   return (
     <>
       <form onSubmit={updateProfileSubmit}>
@@ -44,7 +58,14 @@ function Profile({ useObj }) {
           type='text'
           onChange={nickValueOnChange}
           value={nickValue}
+          maxLength={20}
           placeholder='사용할 닉네임'
+        />
+        <input
+          ref={profileImgInput}
+          type='file'
+          accept='image/*'
+          onChange={onFileChange}
         />
         <input type='submit' value='프로필 업데이트' />
       </form>
