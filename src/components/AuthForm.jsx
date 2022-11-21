@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { authService } from "libs/firebase";
+import styled from "styled-components";
 
 function AuthForm({}) {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -41,32 +42,63 @@ function AuthForm({}) {
   };
   return (
     <form onSubmit={onSubmit}>
-      <input
+      <FormInput
         name='email'
         type='email'
-        placeholder='Email'
+        placeholder='이메일을 입력해주세요'
         required
         value={form.email}
         onChange={onChange}
       />
-      <input
+      <FormInput
         name='password'
         type='password'
-        placeholder='Password'
+        placeholder='비밀번호를 입력해주세요'
         required
         value={form.password}
         onChange={onChange}
       />
-      {error && <span>{error}</span>}
-      <input type='submit' value={newAccount ? "가입하기" : "로그인하기"} />
-      <button onClick={onCheckAccount}>
-        {newAccount ? "로그인하기" : "가입하기"}
-      </button>
-      <div>
-        <input type='submit' value='비밀번호를 잊으셨나요?' />
-      </div>
+      {error && <ErrorMsg>{error}</ErrorMsg>}
+      <ButtonArea>
+        <input type='submit' value={newAccount ? "가입하기" : "로그인하기"} />
+        <button onClick={onCheckAccount}>
+          {newAccount ? "로그인하기" : "가입하기"}
+        </button>
+      </ButtonArea>
     </form>
   );
 }
 
 export default AuthForm;
+
+const FormInput = styled.input`
+  width: 300px;
+  height: 55px;
+  border: 1px solid rgb(207, 217, 222);
+  border-radius: 4px;
+  font-size: 17px;
+  padding: 10px;
+  margin-bottom: 10px;
+`;
+const ButtonArea = styled.div`
+  input {
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    height: 35px;
+    font-size: 15px;
+    border: 1px solid rgb(207, 217, 222);
+    border-radius: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  button {
+    font-size: 14px;
+    color: rgb(29, 155, 240);
+  }
+`;
+const ErrorMsg = styled.span`
+  color: red;
+  font-size: 14px;
+`;
