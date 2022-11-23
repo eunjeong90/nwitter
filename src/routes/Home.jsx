@@ -3,6 +3,7 @@ import { dbService } from "libs/firebase";
 import { collection, onSnapshot, query, orderBy } from "firebase/firestore";
 import NweetCreateForm from "components/NweetCreateForm";
 import Nweet from "components/Nweet";
+import styled from "styled-components";
 
 function Home({ useObj }) {
   const [nweetResult, setNweetResult] = useState([]);
@@ -22,7 +23,7 @@ function Home({ useObj }) {
   }, []);
 
   return (
-    <div>
+    <ContentBox>
       <NweetCreateForm useObj={useObj} />
       {nweetResult.map((post) => (
         <Nweet
@@ -31,8 +32,13 @@ function Home({ useObj }) {
           isCurrentUser={post.userName === useObj.uid}
         />
       ))}
-    </div>
+    </ContentBox>
   );
 }
 
 export default Home;
+
+const ContentBox = styled.div`
+  width: 598px;
+  margin: 0 auto;
+`;

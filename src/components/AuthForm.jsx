@@ -5,8 +5,10 @@ import {
 } from "firebase/auth";
 import { authService } from "libs/firebase";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 function AuthForm({}) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
@@ -33,6 +35,7 @@ function AuthForm({}) {
         );
       }
       console.log(providerData);
+      navigate(`/home`);
     } catch (error) {
       setError(error.message.replace("Firebase: ", ""));
     }

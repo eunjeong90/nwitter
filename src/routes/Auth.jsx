@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { authService } from "libs/firebase";
 import {
   GoogleAuthProvider,
@@ -6,15 +7,16 @@ import {
   FacebookAuthProvider,
 } from "firebase/auth";
 import styled from "styled-components";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTwitter,
   faFacebook,
   faGoogle,
 } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AuthForm from "components/AuthForm";
 
 function Auth() {
+  const navigate = useNavigate();
   const onSocialSubmitClick = ({ target: { name } }) => {
     let providerData;
     if (name === "google") {
@@ -26,6 +28,7 @@ function Auth() {
       });
     }
     signInWithPopup(authService, providerData);
+    navigate(`/home`);
   };
   return (
     <AuthWrap>

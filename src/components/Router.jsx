@@ -1,28 +1,42 @@
 import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Outlet,
+} from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import Navigation from "./Navigation";
 import Profile from "routes/Profile";
+import Layout from "./Layout";
 
+const CommonLayout = () => {
+  <Layout>
+    <Outlet />
+  </Layout>;
+};
 function AppRouter({ isLoggedIn, useObj, refreshUser }) {
   return (
-    <BrowserRouter>
+    <Router>
       {isLoggedIn && <Navigation useObj={useObj} />}
       <Routes>
-        {isLoggedIn ? (
+        {!isLoggedIn ? (
+          <Route path='/' element={<Auth />} />
+        ) : (
           <>
-            <Route path='/home' element={<Home useObj={useObj} />}></Route>
+            {/* <Route element={<CommonLayout />}> */}
+            <Route path='/home' element={<Home useObj={useObj} />} />
             <Route
               path='/profile'
               element={<Profile useObj={useObj} refreshUser={refreshUser} />}
-            ></Route>
+            />
+            {/* </Route> */}
           </>
-        ) : (
-          <Route path='/' element={<Auth />}></Route>
         )}
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
