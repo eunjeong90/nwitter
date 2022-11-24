@@ -32,6 +32,12 @@ module.exports = {
       2,
       { namedcomponents: "arrow-function" },
     ],
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        labelAttributes: ["htmlFor"],
+      },
+    ],
     "import/no-extraneous-dependencies": ["error", { devDependencies: true }],
     "import/no-unresolved": [2, { commonjs: true, amd: true }],
     "prettier/prettier": [
