@@ -26,11 +26,14 @@ function Home({ useObj }) {
     <ContentBox>
       <NweetCreateForm useObj={useObj} />
       {nweetResult.map((post) => (
-        <Nweet
-          key={post.id}
-          nweetObj={post}
-          isCurrentUser={post.userName === useObj.uid}
-        />
+        <>
+          <Nweet
+            key={post.id}
+            nweetObj={post}
+            useObj={useObj}
+            isCurrentUser={post.userName === useObj.uid}
+          />
+        </>
       ))}
     </ContentBox>
   );

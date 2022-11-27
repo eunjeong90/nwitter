@@ -3,10 +3,20 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
 import { v4 as uuidv4 } from "uuid";
+import EmojiPicker from "emoji-picker-react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  ButtonArea,
+  ChatArea,
+  ChatBox,
+  PreviewArea,
+  ProfileBox,
+  StyledCreateForm,
+  StyledFileUpload,
+} from "styles/NweetStyles";
 
 function NweetCreateForm({ useObj }) {
   const { displayName, uid } = useObj;
@@ -101,6 +111,7 @@ function NweetCreateForm({ useObj }) {
                 onChange={onFileChange}
               />
             </StyledFileUpload>
+            {/* <EmojiPicker /> */}
           </div>
           <input type='submit' value='소식올리기' />
         </ButtonArea>
@@ -110,84 +121,3 @@ function NweetCreateForm({ useObj }) {
 }
 
 export default NweetCreateForm;
-
-const StyledCreateForm = styled.form`
-  padding: 0 16px;
-  display: flex;
-  div {
-    &:nth-child(2) {
-      width: 100%;
-    }
-  }
-`;
-const ProfileBox = styled.div`
-  img {
-    width: 48px;
-    height: 48px;
-    border-radius: 50px;
-    margin: 0 15px 0 0;
-  }
-`;
-const ChatArea = styled.div`
-  display: flex;
-`;
-const ChatBox = styled.textarea`
-  width: 100%;
-  border: none;
-  font-size: 20px;
-  outline: 0;
-  resize: none;
-  white-space: pre-wrap;
-  height: auto;
-  margin-top: 12px;
-`;
-const PreviewArea = styled.div`
-  all: unset;
-  position: relative;
-  div {
-    width: 100%;
-    max-height: 670px;
-  }
-  img {
-    border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  button {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
-  svg {
-    color: white;
-  }
-`;
-const StyledFileUpload = styled.label`
-  input {
-    display: none;
-  }
-`;
-const ButtonArea = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  input[type="submit"] {
-    border: none;
-    background-color: #f59e4d;
-    color: white;
-    width: 90px;
-    height: 36px;
-    font-size: 15px;
-    font-weight: bold;
-    border-radius: 20px;
-    line-height: 36px;
-  }
-  svg {
-    color: #f59e4d;
-  }
-`;
