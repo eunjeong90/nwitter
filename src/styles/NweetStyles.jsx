@@ -99,6 +99,7 @@ export const StyledNweetsArea = styled.div`
   }
 `;
 export const StyledNweet = styled.div`
+  flex-grow: 1;
   font-size: 15px;
   strong {
     font-weight: bold;
