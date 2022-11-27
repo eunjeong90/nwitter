@@ -21,14 +21,15 @@ function Auth() {
     let providerData;
     if (name === "google") {
       providerData = new GoogleAuthProvider();
+      navigate(`/home`);
     } else if (name === "facebook") {
       providerData = new FacebookAuthProvider();
       providerData.setCustomParameters({
         display: "popup",
       });
+      navigate(`/home`);
     }
     signInWithPopup(authService, providerData);
-    navigate(`/home`);
   };
   return (
     <AuthWrap>

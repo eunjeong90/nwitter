@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AppRouter from "./Router";
 import { authService } from "libs/firebase";
 import { onAuthStateChanged, updateCurrentUser } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 function App() {
   const [firebaseInit, setFirebaseInit] = useState(false);
@@ -28,6 +29,7 @@ function App() {
     await updateCurrentUser(authService, authService.currentUser);
     setUseObj(authService.currentUser);
   };
+
   return (
     <AppRouter
       useObj={useObj}
