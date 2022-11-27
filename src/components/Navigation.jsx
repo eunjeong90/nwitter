@@ -1,53 +1,67 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouseUser, faUser } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
-function Navigation({ useObj }) {
-  console.log(useObj);
+function Navigation() {
   return (
-    <NavWrap>
-      <StyledNav>
-        <StyledUl>
-          <StyledList>
-            <NavLink to='/home'>홈</NavLink>
-          </StyledList>
-          <StyledList>
-            {/* {useObj.photoURL && (
-            <img
-              src={useObj.photoURL}
-              alt={`${useObj.displayName} 프로필 이미지`}
-              style={{ width: "25px", height: "25px", borderRadius: "50%" }}
-            />
-          )} */}
-            <NavLink to='/profile'>반가워요, {useObj.displayName} 님😙</NavLink>
-          </StyledList>
-        </StyledUl>
-      </StyledNav>
-    </NavWrap>
+    <StyledNav>
+      <ul>
+        <li>
+          <Link to='/home'>
+            <IconBox>
+              <FontAwesomeIcon icon={faHouseUser} size='6x' />
+            </IconBox>
+            <span>홈</span>
+          </Link>
+        </li>
+        <li>
+          <Link to='/profile'>
+            <IconBox>
+              <FontAwesomeIcon icon={faUser} size='6x' />
+            </IconBox>
+            <span>프로필</span>
+          </Link>
+        </li>
+      </ul>
+    </StyledNav>
   );
 }
 
 export default Navigation;
 
-const NavWrap = styled.div`
-  width: 100%;
-`;
 const StyledNav = styled.nav`
-  width: 598px;
-  position: sticky;
-  background-color: #fff;
-  margin: 0 auto;
-  height: 53px;
-`;
-const StyledUl = styled.ul`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-`;
-const StyledList = styled.li`
-  line-height: 53px;
-  a {
-    font-size: 20px;
+  /* position: fixed; */
+  border-right: 1px solid rgb(239, 243, 244);
+  height: 100%;
+  width: 230px;
+  ul {
+    padding: 38px 12px 12px 12px;
   }
+  li {
+    padding: 12px;
+  }
+  a {
+    display: flex;
+    align-items: end;
+    transition-duration: 0.2s;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 50px;
+    &:hover {
+      background-color: rgba(15, 20, 25, 0.1);
+    }
+  }
+  span {
+    font-size: 20px;
+    margin-left: 20px;
+  }
+`;
+const IconBox = styled.div`
+  width: 26px;
+  height: 23px;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
 `;
