@@ -47,12 +47,14 @@ function Nweet({ nweetObj, isCurrentUser, useObj }) {
         <div>
           <div>
             <ProfileBox>
-              {useObj.photoURL && (
-                <img
-                  src={useObj.photoURL}
-                  alt={`${useObj.displayName} 프로필 이미지`}
-                />
-              )}
+              {useObj.photoURL
+                ? isCurrentUser && (
+                    <img
+                      src={useObj.photoURL}
+                      alt={`${useObj.displayName} 프로필 이미지`}
+                    />
+                  )
+                : null}
             </ProfileBox>
           </div>
           <StyledNweet>
