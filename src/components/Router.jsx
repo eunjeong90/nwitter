@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import Profile from "routes/Profile";
@@ -9,9 +9,7 @@ function AppRouter({ isLoggedIn, useObj, refreshUser }) {
   return (
     <BrowserRouter>
       <Routes>
-        {!isLoggedIn ? (
-          <Route path='/' element={<Auth />} />
-        ) : (
+        {isLoggedIn ? (
           <>
             <Route element={<Layout useObj={useObj} />}>
               <Route path='home' element={<Home useObj={useObj} />} />
@@ -21,6 +19,8 @@ function AppRouter({ isLoggedIn, useObj, refreshUser }) {
               />
             </Route>
           </>
+        ) : (
+          <Route path='/' element={<Auth />} />
         )}
       </Routes>
     </BrowserRouter>
