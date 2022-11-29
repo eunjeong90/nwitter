@@ -7,7 +7,7 @@ import Layout from "./Layout";
 
 function AppRouter({ isLoggedIn, useObj, refreshUser }) {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter>
       <Routes>
         {!isLoggedIn ? (
           <Route path='/' element={<Auth />} />
