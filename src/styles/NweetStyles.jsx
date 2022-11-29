@@ -104,9 +104,9 @@ export const StyledNweet = styled.div`
   strong {
     font-weight: bold;
   }
-  span {
+  /* span {
     margin-left: 8px;
-  }
+  } */
   p {
     margin-top: 5px;
   }

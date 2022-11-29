@@ -4,17 +4,10 @@ import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import Profile from "routes/Profile";
 import Layout from "./Layout";
-import Navigation from "./Header";
 
-const CommonLayout = () => {
-  <Layout>
-    <Outlet />
-  </Layout>;
-};
 function AppRouter({ isLoggedIn, useObj, refreshUser }) {
   return (
-    <BrowserRouter>
-      {/* {isLoggedIn && <Navigation useObj={useObj} />} */}
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         {!isLoggedIn ? (
           <Route path='/' element={<Auth />} />

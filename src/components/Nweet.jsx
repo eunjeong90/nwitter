@@ -5,6 +5,7 @@ import { deleteObject, ref } from "firebase/storage";
 import {
   ButtonArea,
   NweetButtonArea,
+  PreviewArea,
   ProfileBox,
   StyledCreateForm,
   StyledNweet,
@@ -47,26 +48,41 @@ function Nweet({ nweetObj, isCurrentUser, useObj }) {
         <div>
           <div>
             <ProfileBox>
-              {useObj.photoURL
-                ? isCurrentUser && (
-                    <img
-                      src={useObj.photoURL}
-                      alt={`${useObj.displayName} 프로필 이미지`}
-                    />
-                  )
-                : null}
+              {useObj.photoURL ? (
+                isCurrentUser && (
+                  <img
+                    src={useObj.photoURL}
+                    alt={`${useObj.displayName} 프로필 이미지`}
+                  />
+                )
+              ) : (
+                <img
+                  src={useObj.photoURL}
+                  alt={`${useObj.displayName} 프로필 이미지`}
+                />
+              )}
             </ProfileBox>
           </div>
           <StyledNweet>
-            <strong>{nweetObj.userName}</strong>
+            <strong>
+              {nweetObj.userName === useObj.uid && useObj.displayName}
+            </strong>
             <span>{nweetObj.createdAt}</span>
             <p>{nweetObj.text}</p>
             {nweetObj.imgFileURL && (
-              <img
-                src={nweetObj.imgFileURL}
-                style={{ width: "300px", height: "auto" }}
-                alt='사진'
-              />
+              <PreviewArea>
+                <div>
+                  <img
+                    src={nweetObj.imgFileURL}
+                    style={{
+                      width: "300px",
+                      height: "auto",
+                      marginTop: "10px",
+                    }}
+                    alt='사진'
+                  />
+                </div>
+              </PreviewArea>
             )}
             {isCurrentUser && (
               <NweetButtonArea>

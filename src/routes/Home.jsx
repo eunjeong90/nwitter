@@ -13,6 +13,7 @@ function Home({ useObj }) {
       collection(dbService, "tweets"),
       orderBy("createdAt", "desc")
     );
+    // console.log(dbService);
     onSnapshot(q, (snapshot) => {
       const nweetArr = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -21,7 +22,7 @@ function Home({ useObj }) {
       setNweetResult(nweetArr);
     });
   }, []);
-
+  console.log(nweetResult);
   return (
     <ContentBox>
       <NweetCreateForm useObj={useObj} />
