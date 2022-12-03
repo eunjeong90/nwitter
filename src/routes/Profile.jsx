@@ -60,7 +60,10 @@ function Profile({ useObj, refreshUser }) {
       };
       await addDoc(collection(dbService, "profileImage"), profileImgUpdate);
     }
-    nickValue === "" && alert("닉네임을 입력해주세요😉");
+    if (nickValue === "") {
+      alert("닉네임을 입력해주세요😉");
+      return false;
+    }
 
     await updateProfile(useObj, {
       displayName: nickValue,
