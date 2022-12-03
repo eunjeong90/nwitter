@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import { authService } from "libs/firebase";
 import {
   GoogleAuthProvider,
@@ -16,18 +15,15 @@ import {
 import AuthForm from "components/AuthForm";
 
 function Auth() {
-  const navigate = useNavigate();
   const onSocialSubmitClick = ({ target: { name } }) => {
     let providerData;
     if (name === "google") {
       providerData = new GoogleAuthProvider();
-      navigate(`/home`);
     } else if (name === "facebook") {
       providerData = new FacebookAuthProvider();
       providerData.setCustomParameters({
         display: "popup",
       });
-      navigate(`/home`);
     }
     signInWithPopup(authService, providerData);
   };
