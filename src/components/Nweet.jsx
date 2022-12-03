@@ -12,8 +12,15 @@ import {
   StyledNweets,
   StyledNweetsArea,
 } from "styles/NweetStyles";
+import anonymous from "assets/image/anonymous.png";
 
 function Nweet({ nweetObj, isCurrentUser, useObj }) {
+  const {
+    author: { userName, photoURL },
+    text,
+    createdAt,
+    id,
+  } = nweetObj;
   const nweetRef = doc(dbService, "tweets", nweetObj.id);
   const [updateNweet, setUpdateNweet] = useState(nweetObj.text);
   const [updateEditor, setUpdateEditor] = useState(false);
@@ -48,27 +55,17 @@ function Nweet({ nweetObj, isCurrentUser, useObj }) {
         <div>
           <div>
             <ProfileBox>
-              {useObj.photoURL ? (
-                isCurrentUser && (
-                  <img
-                    src={useObj.photoURL}
-                    alt={`${useObj.displayName} 프로필 이미지`}
-                  />
-                )
+              {photoURL === null ? (
+                <img src={anonymous} alt={`${userName} 프로필 이미지`} />
               ) : (
-                <img
-                  src={useObj.photoURL}
-                  alt={`${useObj.displayName} 프로필 이미지`}
-                />
+                <img src={photoURL} alt={`${userName} 프로필 이미지`} />
               )}
             </ProfileBox>
           </div>
           <StyledNweet>
-            <strong>
-              {nweetObj.userName === useObj.uid && useObj.displayName}
-            </strong>
-            <span>{nweetObj.createdAt}</span>
-            <p>{nweetObj.text}</p>
+            <strong>{userName}</strong>
+            <span>{createdAt}</span>
+            <p>{text}</p>
             {nweetObj.imgFileURL && (
               <PreviewArea>
                 <div>

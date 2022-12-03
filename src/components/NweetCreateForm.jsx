@@ -19,7 +19,7 @@ import {
 } from "styles/NweetStyles";
 
 function NweetCreateForm({ useObj }) {
-  const { displayName, uid } = useObj;
+  const { displayName, uid, photoURL } = useObj;
   const [nweet, setNweet] = useState("");
   const [imgFile, setImgFile] = useState("");
 
@@ -34,8 +34,11 @@ function NweetCreateForm({ useObj }) {
     const nweetObj = {
       text: nweet,
       createdAt: new Date().toLocaleString(),
-      userName: uid,
       imgFileURL,
+      author: {
+        userName: displayName,
+        photoURL: photoURL,
+      },
     };
     await addDoc(collection(dbService, "tweets"), nweetObj);
     setNweet("");
