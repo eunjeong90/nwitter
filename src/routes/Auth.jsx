@@ -37,7 +37,7 @@ function Auth() {
         <span>
           <FontAwesomeIcon icon={faTwitter} size='9x' />
         </span>
-        <strong>느위터에 로그인하기</strong>
+        <strong>로그인하기</strong>
         <FormBox>
           <SocialBtn name='google' onClick={onSocialSubmitClick}>
             <FontAwesomeIcon icon={faGoogle} size='lg' />

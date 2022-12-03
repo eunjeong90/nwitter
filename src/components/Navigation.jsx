@@ -9,7 +9,7 @@ function Navigation() {
     <StyledNav>
       <ul>
         <li>
-          <Link to='/home'>
+          <Link to='/'>
             <IconBox>
               <FontAwesomeIcon icon={faHouseUser} size='6x' />
             </IconBox>
