@@ -21,6 +21,7 @@ export const ProfileBox = styled.div`
 `;
 export const ChatArea = styled.div`
   display: flex;
+  position: relative;
 `;
 export const ChatBox = styled.textarea`
   width: 100%;
@@ -79,9 +80,15 @@ export const ButtonArea = styled.div`
     font-weight: bold;
     border-radius: 20px;
     line-height: 36px;
+    cursor: pointer;
   }
   svg {
     color: #f59e4d;
+  }
+  div {
+    display: flex;
+    align-items: center;
+    width: 70%;
   }
 `;
 
@@ -119,12 +126,57 @@ export const NweetButtonArea = styled.div`
   justify-content: end;
   button {
     width: 70px;
-    background: gray;
+    background: #eb4152f2;
     height: 28px;
     border-radius: 20px;
     color: white;
     &:last-child {
       margin-left: 5px;
+      background-color: #007aeb;
     }
   }
+`;
+
+// 느윗 게시글 수정 form
+export const StyledUpdateForm = styled.form`
+  padding: 0 16px;
+  div {
+    display: flex;
+    justify-content: flex-end;
+  }
+  input {
+    font-size: 13px;
+    border: none;
+    width: 70px;
+    background: gray;
+    height: 28px;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+    &:last-child {
+      margin-left: 5px;
+    }
+  }
+  input[type="submit"] {
+    background-color: #007aeb;
+  }
+`;
+export const StyledUpdateChatBox = styled(ChatBox)`
+  /* font-size: 20px; */
+`;
+
+// 이모지
+export const StyledEmojiPopup = styled.div`
+  position: absolute;
+  top: 100px;
+  z-index: 100;
+  .emoji-mart-bar {
+    &:last-child {
+      /* display: none; */
+    }
+  }
+`;
+export const StyledEmojiButton = styled.button`
+  font-size: 15px;
+  margin: 0 10px;
 `;
