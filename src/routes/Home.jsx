@@ -32,7 +32,7 @@ function Home({ useObj }) {
             key={post.id}
             nweetObj={post}
             useObj={useObj}
-            isCurrentUser={post.userName === useObj.uid}
+            isCurrentUser={post.userId === useObj.uid}
           />
         </>
       ))}

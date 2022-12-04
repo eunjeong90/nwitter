@@ -34,6 +34,7 @@ function NweetCreateForm({ useObj }) {
     const nweetObj = {
       text: nweet,
       createdAt: new Date().toLocaleString(),
+      userId: uid,
       imgFileURL,
       author: {
         userName: displayName,
