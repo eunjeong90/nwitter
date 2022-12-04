@@ -35,7 +35,6 @@ function AuthForm({}) {
         );
       }
       console.log(providerData);
-      navigate(`/home`);
     } catch (error) {
       setError(error.message.replace("Firebase: ", ""));
     }

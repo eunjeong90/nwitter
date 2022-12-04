@@ -1,4 +1,4 @@
-const { default: styled } = require("styled-components");
+import styled from "styled-components";
 
 export const StyledCreateForm = styled.form`
   padding: 0 16px;
@@ -38,12 +38,14 @@ export const PreviewArea = styled.div`
   div {
     width: 100%;
     max-height: 670px;
+    margin: 10px 0 20px;
   }
   img {
     border-radius: 10px;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    margin-top: 10px;
   }
   button {
     background-color: rgba(0, 0, 0, 0.5);
@@ -104,9 +106,9 @@ export const StyledNweet = styled.div`
   strong {
     font-weight: bold;
   }
-  /* span {
+  span {
     margin-left: 8px;
-  } */
+  }
   p {
     margin-top: 5px;
   }

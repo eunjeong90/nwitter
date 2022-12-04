@@ -69,15 +69,7 @@ function Nweet({ nweetObj, isCurrentUser, useObj }) {
             {nweetObj.imgFileURL && (
               <PreviewArea>
                 <div>
-                  <img
-                    src={nweetObj.imgFileURL}
-                    style={{
-                      width: "300px",
-                      height: "auto",
-                      marginTop: "10px",
-                    }}
-                    alt='사진'
-                  />
+                  <img src={nweetObj.imgFileURL} alt='사진' />
                 </div>
               </PreviewArea>
             )}
