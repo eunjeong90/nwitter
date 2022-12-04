@@ -2,17 +2,16 @@ import React, { useState } from "react";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
 import { deleteObject, ref } from "firebase/storage";
+import anonymous from "assets/image/anonymous.png";
 import {
-  ButtonArea,
   NweetButtonArea,
   PreviewArea,
   ProfileBox,
-  StyledCreateForm,
   StyledNweet,
-  StyledNweets,
   StyledNweetsArea,
+  StyledUpdateChatBox,
+  StyledUpdateForm,
 } from "styles/NweetStyles";
-import anonymous from "assets/image/anonymous.png";
 
 function Nweet({ nweetObj, isCurrentUser, useObj }) {
   const {
@@ -45,11 +44,17 @@ function Nweet({ nweetObj, isCurrentUser, useObj }) {
   return (
     <>
       {updateEditor && (
-        <form onSubmit={handleUpdateNweet}>
-          <input type='text' value={updateNweet} onChange={onChangeNewNweet} />
-          <input type='submit' value='수정하기' onClick={handleUpdateNweet} />
-          <input type='button' value='취소하기' onClick={toggleUpdateState} />
-        </form>
+        <StyledUpdateForm onSubmit={handleUpdateNweet}>
+          <StyledUpdateChatBox
+            type='text'
+            value={updateNweet}
+            onChange={onChangeNewNweet}
+          />
+          <div>
+            <input type='button' value='취소하기' onClick={toggleUpdateState} />
+            <input type='submit' value='수정하기' onClick={handleUpdateNweet} />
+          </div>
+        </StyledUpdateForm>
       )}
       <StyledNweetsArea>
         <div>
