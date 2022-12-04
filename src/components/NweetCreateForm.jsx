@@ -3,10 +3,11 @@ import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
 import { v4 as uuidv4 } from "uuid";
-import EmojiPicker from "emoji-picker-react";
-import styled from "styled-components";
+import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-regular-svg-icons";
+import { faImage, faFaceSmile } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   ButtonArea,
@@ -15,6 +16,8 @@ import {
   PreviewArea,
   ProfileBox,
   StyledCreateForm,
+  StyledEmojiButton,
+  StyledEmojiPopup,
   StyledFileUpload,
 } from "styles/NweetStyles";
 
@@ -22,6 +25,7 @@ function NweetCreateForm({ useObj }) {
   const { displayName, uid, photoURL } = useObj;
   const [nweet, setNweet] = useState("");
   const [imgFile, setImgFile] = useState("");
+  const [showEmojis, setShowEmojis] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -42,11 +46,19 @@ function NweetCreateForm({ useObj }) {
       },
     };
     await addDoc(collection(dbService, "tweets"), nweetObj);
+    setShowEmojis(false);
     setNweet("");
     setImgFile("");
   };
   const onChange = ({ target: { value } }) => {
     setNweet(value);
+  };
+  const addEmoji = (e) => {
+    let sym = e.unified.split("-");
+    let codesArray = [];
+    sym.forEach((el) => codesArray.push("0x" + el));
+    let emoji = String.fromCodePoint(...codesArray);
+    setNweet(nweet + emoji);
   };
 
   const fileInput = useRef(null);
@@ -81,11 +93,14 @@ function NweetCreateForm({ useObj }) {
             value={nweet}
             onChange={onChange}
             type='text'
-            name=''
-            id=''
             placeholder='무슨 일이 일어나고 있나요?'
             maxLength={120}
           />
+          {showEmojis && (
+            <StyledEmojiPopup>
+              <Picker onSelect={addEmoji} />
+            </StyledEmojiPopup>
+          )}
         </ChatArea>
         {imgFile && (
           <PreviewArea>
@@ -115,7 +130,12 @@ function NweetCreateForm({ useObj }) {
                 onChange={onFileChange}
               />
             </StyledFileUpload>
-            {/* <EmojiPicker /> */}
+            <StyledEmojiButton
+              onClick={() => setShowEmojis(!showEmojis)}
+              type='button'
+            >
+              <FontAwesomeIcon icon={faFaceSmile} size='lg' />
+            </StyledEmojiButton>
           </div>
           <input type='submit' value='소식올리기' />
         </ButtonArea>
