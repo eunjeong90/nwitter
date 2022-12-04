@@ -5,7 +5,7 @@ import { dbService, storageService } from "libs/firebase";
 import { v4 as uuidv4 } from "uuid";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-
+import anonymous from "assets/image/anonymous.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faFaceSmile } from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -79,11 +79,10 @@ function NweetCreateForm({ useObj }) {
     <StyledCreateForm onSubmit={onSubmit}>
       <div>
         <ProfileBox>
-          {useObj.photoURL && (
-            <img
-              src={useObj.photoURL}
-              alt={`${useObj.displayName} 프로필 이미지`}
-            />
+          {useObj.photoURL === null ? (
+            <img src={anonymous} alt={`${displayName} 프로필 이미지`} />
+          ) : (
+            <img src={photoURL} alt={`${displayName} 프로필 이미지`} />
           )}
         </ProfileBox>
       </div>
