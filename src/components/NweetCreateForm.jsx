@@ -1,8 +1,7 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
-import Axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
@@ -23,30 +22,12 @@ import {
 } from "styles/NweetStyles";
 import GiphyBox from "./GiphyBox";
 
-const GIPHY_BASE_URL = "http://api.giphy.com/v1/gifs/search";
-
 function NweetCreateForm({ useObj }) {
   const { displayName, uid, photoURL } = useObj;
   const [nweet, setNweet] = useState("");
   const [imgFile, setImgFile] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-
-  const [gifArr, setGifArr] = useState([]);
   const [showGiphy, setShowGiphy] = useState(false);
-  const [searchGif, setSearchGif] = useState("");
-
-  useEffect(() => {
-    getGiphy();
-  }, []);
-  const getGiphy = async () => {
-    const res = await Axios.get(
-      `${GIPHY_BASE_URL}?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&q=hello&limit=25&offset=0&rating=pg-13&lang=ko`
-    )
-      .then((res) => {
-        setGifArr(res.data.data);
-      })
-      .catch((error) => console.error(error));
-  };
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -71,6 +52,7 @@ function NweetCreateForm({ useObj }) {
     setShowEmojis(false);
     setNweet("");
     setImgFile("");
+    setShowGiphy(false);
   };
   const onChange = ({ target: { value } }) => {
     setNweet(value);
@@ -167,12 +149,9 @@ function NweetCreateForm({ useObj }) {
         </div>
       </StyledCreateForm>
       <GiphyBox
-        gifArr={gifArr}
         showGiphy={showGiphy}
-        searchGif={searchGif}
         imgFile={imgFile}
         setImgFile={setImgFile}
-        setSearchGif={setSearchGif}
       />
     </>
   );

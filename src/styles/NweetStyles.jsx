@@ -172,7 +172,7 @@ export const StyledEmojiPopup = styled.div`
   z-index: 100;
   .emoji-mart-bar {
     &:last-child {
-      /* display: none; */
+      display: none;
     }
   }
 `;
