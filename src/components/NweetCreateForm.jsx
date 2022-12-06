@@ -1,7 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
+import Axios from "axios";
 import { v4 as uuidv4 } from "uuid";
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
@@ -20,6 +21,9 @@ import {
   StyledEmojiPopup,
   StyledFileUpload,
 } from "styles/NweetStyles";
+import GiphyBox from "./GiphyBox";
+
+const GIPHY_BASE_URL = "http://api.giphy.com/v1/gifs/search";
 
 function NweetCreateForm({ useObj }) {
   const { displayName, uid, photoURL } = useObj;
@@ -27,9 +31,27 @@ function NweetCreateForm({ useObj }) {
   const [imgFile, setImgFile] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
 
+  const [gifArr, setGifArr] = useState([]);
+  const [showGiphy, setShowGiphy] = useState(false);
+  const [searchGif, setSearchGif] = useState("");
+
+  useEffect(() => {
+    getGiphy();
+  }, []);
+  const getGiphy = async () => {
+    const res = await Axios.get(
+      `${GIPHY_BASE_URL}?api_key=${process.env.REACT_APP_GIPHY_API_KEY}&q=hello&limit=25&offset=0&rating=pg-13&lang=ko`
+    )
+      .then((res) => {
+        setGifArr(res.data.data);
+      })
+      .catch((error) => console.error(error));
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     let imgFileURL = "";
+    // console.log(`imgFile: ${imgFile}`);
     if (imgFile !== "") {
       const imgFileRef = ref(storageService, `${uid}/${uuidv4()}`);
       await uploadString(imgFileRef, imgFile, "data_url");
@@ -65,81 +87,94 @@ function NweetCreateForm({ useObj }) {
   const onFileChange = ({ target: { files } }) => {
     const file = files[0];
     const reader = new FileReader();
+    reader.readAsDataURL(file);
     reader.onloadend = ({ currentTarget: { result } }) => {
       setImgFile(result);
     };
-    reader.readAsDataURL(file);
   };
+
   const onClearFile = () => {
     fileInput.current.value = null;
     setImgFile(null);
   };
-
   return (
-    <StyledCreateForm onSubmit={onSubmit}>
-      <div>
-        <ProfileBox>
-          {useObj.photoURL === null ? (
-            <img src={anonymous} alt={`${displayName} 프로필 이미지`} />
-          ) : (
-            <img src={photoURL} alt={`${displayName} 프로필 이미지`} />
+    <>
+      <StyledCreateForm onSubmit={onSubmit}>
+        <div>
+          <ProfileBox>
+            {useObj.photoURL === null ? (
+              <img src={anonymous} alt={`${displayName} 프로필 이미지`} />
+            ) : (
+              <img src={photoURL} alt={`${displayName} 프로필 이미지`} />
+            )}
+          </ProfileBox>
+        </div>
+        <div>
+          <ChatArea>
+            <ChatBox
+              value={nweet}
+              onChange={onChange}
+              type='text'
+              placeholder='무슨 일이 일어나고 있나요?'
+              maxLength={120}
+            />
+            {showEmojis && (
+              <StyledEmojiPopup>
+                <Picker onSelect={addEmoji} />
+              </StyledEmojiPopup>
+            )}
+          </ChatArea>
+          {imgFile && (
+            <PreviewArea>
+              <div>
+                <img
+                  src={imgFile}
+                  ref={fileInput}
+                  alt='첨부파일'
+                  width='100px'
+                  height='100px'
+                />
+                <button onClick={onClearFile}>
+                  <FontAwesomeIcon icon={faXmark} size='lg' />
+                </button>
+              </div>
+            </PreviewArea>
           )}
-        </ProfileBox>
-      </div>
-      <div>
-        <ChatArea>
-          <ChatBox
-            value={nweet}
-            onChange={onChange}
-            type='text'
-            placeholder='무슨 일이 일어나고 있나요?'
-            maxLength={120}
-          />
-          {showEmojis && (
-            <StyledEmojiPopup>
-              <Picker onSelect={addEmoji} />
-            </StyledEmojiPopup>
-          )}
-        </ChatArea>
-        {imgFile && (
-          <PreviewArea>
+          <ButtonArea>
             <div>
-              <img
-                src={imgFile}
-                ref={fileInput}
-                alt='첨부파일'
-                width='100px'
-                height='100px'
-              />
-              <button onClick={onClearFile}>
-                <FontAwesomeIcon icon={faXmark} size='lg' />
+              <StyledFileUpload htmlFor='fileUploader'>
+                <FontAwesomeIcon icon={faImage} size='5x' />
+                <input
+                  ref={fileInput}
+                  type='file'
+                  id='fileUploader'
+                  accept='image/*'
+                  onChange={onFileChange}
+                />
+              </StyledFileUpload>
+              <StyledEmojiButton
+                onClick={() => setShowEmojis(!showEmojis)}
+                type='button'
+              >
+                <FontAwesomeIcon icon={faFaceSmile} size='lg' />
+              </StyledEmojiButton>
+              <button type='button' onClick={() => setShowGiphy(!showGiphy)}>
+                gif버튼
               </button>
             </div>
-          </PreviewArea>
-        )}
-        <ButtonArea>
-          <div>
-            <StyledFileUpload htmlFor='fileUploader'>
-              <FontAwesomeIcon icon={faImage} size='5x' />
-              <input
-                ref={fileInput}
-                type='file'
-                id='fileUploader'
-                accept='image/*'
-                onChange={onFileChange}
-              />
-            </StyledFileUpload>
-            <StyledEmojiButton
-              onClick={() => setShowEmojis(!showEmojis)}
-              type='button'
-            >
-              <FontAwesomeIcon icon={faFaceSmile} size='lg' />
-            </StyledEmojiButton>
-          </div>
-          <input type='submit' value='소식올리기' />
-        </ButtonArea>
-      </div>
-    </StyledCreateForm>
+            <input type='submit' value='소식올리기' />
+          </ButtonArea>
+        </div>
+      </StyledCreateForm>
+      <GiphyBox
+        gifArr={gifArr}
+        showGiphy={showGiphy}
+        searchGif={searchGif}
+        imgFile={imgFile}
+        setImgFile={setImgFile}
+        setSearchGif={setSearchGif}
+      />
+    </>
   );
 }
 
