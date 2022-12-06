@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-const GIPHY_SEARCH_BASE_URL = "http://api.giphy.com/v1/gifs/search";
-const GIPHY_TRENDING_BASE_URL = "http://api.giphy.com/v1/gifs/trending";
+const GIPHY_SEARCH_BASE_URL = "https://api.giphy.com/v1/gifs/search";
+const GIPHY_TRENDING_BASE_URL = "https://api.giphy.com/v1/gifs/trending";
 
 function GiphyBox({ setImgFile, showGiphy }) {
   // const [keyword, setKeyword] = useState([
