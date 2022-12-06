@@ -66,6 +66,9 @@ export const StyledFileUpload = styled.label`
     display: none;
   }
 `;
+export const StyledGifButton = styled.button`
+  font-size: 15px;
+`;
 export const ButtonArea = styled.div`
   display: flex;
   justify-content: space-between;

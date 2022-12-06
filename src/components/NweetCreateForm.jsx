@@ -7,7 +7,11 @@ import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
 import anonymous from "assets/image/anonymous.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faFaceSmile } from "@fortawesome/free-regular-svg-icons";
+import {
+  faImage,
+  faFaceSmile,
+  faCirclePlay,
+} from "@fortawesome/free-regular-svg-icons";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import {
   ButtonArea,
@@ -19,6 +23,7 @@ import {
   StyledEmojiButton,
   StyledEmojiPopup,
   StyledFileUpload,
+  StyledGifButton,
 } from "styles/NweetStyles";
 import GiphyBox from "./GiphyBox";
 
@@ -140,9 +145,12 @@ function NweetCreateForm({ useObj }) {
               >
                 <FontAwesomeIcon icon={faFaceSmile} size='lg' />
               </StyledEmojiButton>
-              <button type='button' onClick={() => setShowGiphy(!showGiphy)}>
-                gif버튼
-              </button>
+              <StyledGifButton
+                type='button'
+                onClick={() => setShowGiphy(!showGiphy)}
+              >
+                <FontAwesomeIcon icon={faCirclePlay} size='lg' />
+              </StyledGifButton>
             </div>
             <input type='submit' value='소식올리기' />
           </ButtonArea>
