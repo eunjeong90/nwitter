@@ -4,6 +4,8 @@ import Home from "../routes/Home";
 import Auth from "../routes/Auth";
 import Profile from "routes/Profile";
 import Layout from "./Layout";
+import GiphyBox from "./GiphyModal";
+import GiphyItems from "./GiphyItems";
 
 function AppRouter({ isLoggedIn, useObj, refreshUser }) {
   return (
@@ -12,7 +14,11 @@ function AppRouter({ isLoggedIn, useObj, refreshUser }) {
         {isLoggedIn ? (
           <>
             <Route element={<Layout useObj={useObj} />}>
-              <Route path='/' element={<Home useObj={useObj} />} />
+              <Route path='/' element={<Home useObj={useObj} />}>
+                <Route path='/foundmedia' element={<GiphyBox />}>
+                  <Route path='/foundmedia/search' element={<GiphyItems />} />
+                </Route>
+              </Route>
               <Route
                 path='/profile'
                 element={<Profile useObj={useObj} refreshUser={refreshUser} />}
