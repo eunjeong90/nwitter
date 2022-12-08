@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
 import { dbService, storageService } from "libs/firebase";
@@ -25,14 +25,17 @@ import {
   StyledFileUpload,
   StyledGifButton,
 } from "styles/NweetStyles";
-import GiphyBox from "./GiphyBox";
+import { useNavigate } from "react-router-dom";
+import GiphyBox from "./GiphyModal";
+import { ModalContext } from "./modal/modalContext";
 
 function NweetCreateForm({ useObj }) {
+  const navigate = useNavigate();
+  const { showModal, setShowModal } = useContext(ModalContext);
   const { displayName, uid, photoURL } = useObj;
   const [nweet, setNweet] = useState("");
   const [imgFile, setImgFile] = useState("");
   const [showEmojis, setShowEmojis] = useState(false);
-  const [showGiphy, setShowGiphy] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -57,7 +60,6 @@ function NweetCreateForm({ useObj }) {
     setShowEmojis(false);
     setNweet("");
     setImgFile("");
-    setShowGiphy(false);
   };
   const onChange = ({ target: { value } }) => {
     setNweet(value);
@@ -147,7 +149,10 @@ function NweetCreateForm({ useObj }) {
               </StyledEmojiButton>
               <StyledGifButton
                 type='button'
-                onClick={() => setShowGiphy(!showGiphy)}
+                onClick={() => {
+                  navigate("foundmedia");
+                  setShowModal(true);
+                }}
               >
                 <FontAwesomeIcon icon={faCirclePlay} size='lg' />
               </StyledGifButton>
@@ -157,9 +162,10 @@ function NweetCreateForm({ useObj }) {
         </div>
       </StyledCreateForm>
       <GiphyBox
-        showGiphy={showGiphy}
         imgFile={imgFile}
         setImgFile={setImgFile}
+        showModal={showModal}
+        setShowModal={setShowModal}
       />
     </>
   );
