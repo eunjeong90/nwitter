@@ -1,15 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import styled from "styled-components";
 import GiphyItems from "./GiphyItems";
 
 const GIPHY_SEARCH_BASE_URL = "https://api.giphy.com/v1/gifs/search";
 
 function GiphyBox({ setImgFile, showModal, setShowModal }) {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [keyword, setKeyword] = useState([
     {
       label: "안녕",
@@ -77,7 +78,7 @@ function GiphyBox({ setImgFile, showModal, setShowModal }) {
   };
   const onBackClick = () => {
     setMoveCategory(false);
-    // navigate(-1);
+    // navigate("/");
     setSearchGif("");
   };
   const handleInputChange = ({ target: { value } }) => {
@@ -125,7 +126,10 @@ function GiphyBox({ setImgFile, showModal, setShowModal }) {
               ) : (
                 <>
                   <StyledSearchArea>
-                    <Link onClick={() => setShowModal(false)}>
+                    <Link
+                      to={`..?${searchParams.toString()}`}
+                      onClick={() => setShowModal(false)}
+                    >
                       <FontAwesomeIcon icon={faXmark} size='5x' />
                     </Link>
 
