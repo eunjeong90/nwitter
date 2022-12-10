@@ -77,7 +77,7 @@ function GiphyBox({ setImgFile, showModal, setShowModal }) {
   };
   const onBackClick = () => {
     setMoveCategory(false);
-    navigate(-1);
+    // navigate(-1);
     setSearchGif("");
   };
   const handleInputChange = ({ target: { value } }) => {
