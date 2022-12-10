@@ -54,7 +54,7 @@ export const PreviewArea = styled.div`
     width: 25px;
     height: 25px;
     position: absolute;
-    top: 10px;
+    top: 18px;
     left: 10px;
   }
   svg {
@@ -177,6 +177,9 @@ export const StyledEmojiPopup = styled.div`
     &:last-child {
       display: none;
     }
+  }
+  .emoji-mart-search {
+    display: none;
   }
 `;
 export const StyledEmojiButton = styled.button`
