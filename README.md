@@ -17,8 +17,11 @@
   - firebase 실시간 데이터 베이스로 새로고침 없이 등록되는 게시글 쓰기와 읽기
   - 본인이 등록한 게시글 수정, 삭제
   - 이미지 업로드 & 미리보기  
-  - _**<span style="color:red">[update] 글작성폼에 emoji picker 추가</span>**_
-  - _**[update] 글작성폼에 GIPHY api로 웹 gif 파일 검색 및 첨부 기능 추가**_
+  - _**<span style="color:red">[update] 글작성폼에 emoji picker 추가</span>**_  
+    ![Dec-10-2022 14-51-25](https://user-images.githubusercontent.com/89186225/206831729-a56971f8-e82b-40ca-836b-9639d6301493.gif)
+  - _**[update] 글작성폼에 GIPHY api로 웹 gif 파일 검색 및 첨부 기능 추가**_ 
+  
+    ![Dec-10-2022 14-44-56](https://user-images.githubusercontent.com/89186225/206831514-7d834907-9633-41b3-9a52-1bb3bcdc3cc6.gif)
   
 **프로필**
   - 닉네임, 프로필 사진 변경
